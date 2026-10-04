@@ -127,3 +127,7 @@ Die Backend-Tests verwenden ein gefälschtes imapsync (`backend/tests/fake_imaps
 - Der Fortschritt basiert auf den Nachrichtenzahlen von Host1 und ist bei `--folder`/`--include`-Filtern nur ungefähr.
 - Bei `--dry`, `--justfolders` oder sehr schnellen Läufen gibt es kaum Zwischenstände.
 - Freitext-Zusatzoptionen werden ungeprüft an imapsync übergeben.
+
+## Lizenz
+
+[MIT](LICENSE) – gilt für den Code dieses Repos. imapsync selbst wird beim Docker-Build von [github.com/imapsync/imapsync](https://github.com/imapsync/imapsync) geladen und steht unter seiner eigenen Lizenz (NOLIMIT Public License). Es ist nicht Teil dieses Repos.
