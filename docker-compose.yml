@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+    volumes:
+      - imapsync-data:/data
+    expose:
+      - "8000"
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    environment:
+      BACKEND_URL: http://backend:8000
+    ports:
+      # Nur lokal erreichbar – die App hat KEINE Authentifizierung!
+      - "127.0.0.1:8192:8192"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  imapsync-data:
