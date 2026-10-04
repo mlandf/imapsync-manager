@@ -12,7 +12,9 @@ from pathlib import Path
 from src.models.options import SyncOptions
 from src.models.profile import ProfileBase, Security
 
-_SECONDS_PER_DAY = 86400
+# Entfernt Leerzeichen am Ende/Anfang jedes Ordnernamen-Teils (z. B. "Ballett /x" -> "Ballett/x").
+# Manche Server (iCloud) lehnen solche Namen mit "excess whitespace" ab.
+TRIM_FOLDER_REGEXES = (r"s/\s+(?=[\/.]|$)//g", r"s/(^|[\/.])\s+/$1/g")
 
 
 @dataclass(frozen=True)
@@ -81,6 +83,9 @@ def _value_args(opts: SyncOptions) -> list[str]:
         args += ["--exclude", regex]
     for mapping in opts.folder_mappings:
         args += ["--regextrans2", folder_mapping_regex(mapping.source, mapping.target)]
+    if opts.trim_folder_names:
+        for regex in TRIM_FOLDER_REGEXES:
+            args += ["--regextrans2", regex]
     if opts.max_age_days is not None:
         args += ["--maxage", str(opts.max_age_days)]
     if opts.min_age_days is not None:

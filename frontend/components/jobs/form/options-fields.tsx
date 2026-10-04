@@ -55,13 +55,24 @@ export function OptionsFields({ control }: { control: Control<JobFormValues> }) 
             <TextAreaField control={control} name="exclude" label={t("options.exclude")} hint={perLine} />
           </div>
           <FolderMappingFields control={control} />
+          <SwitchField
+            control={control}
+            name="trim_folder_names"
+            label={t("options.trim_folder_names")}
+            hint={t("options.trim_folder_names.hint")}
+          />
         </Section>
         <Separator />
         <Section title={t("options.filters")}>
           <div className="grid gap-4 md:grid-cols-2">
             <TextField control={control} name="max_age_days" label={t("options.max_age_days")} />
             <TextField control={control} name="min_age_days" label={t("options.min_age_days")} />
-            <TextField control={control} name="max_size_bytes" label={t("options.max_size_bytes")} />
+            <TextField
+              control={control}
+              name="max_size_bytes"
+              label={t("options.max_size_bytes")}
+              hint={t("options.max_size.hint")}
+            />
             <TextField
               control={control}
               name="max_bytes_per_second"

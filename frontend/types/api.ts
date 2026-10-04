@@ -28,6 +28,7 @@ export interface SyncOptions {
   include: string[];
   exclude: string[];
   folder_mappings: FolderMapping[];
+  trim_folder_names: boolean;
   delete2: boolean;
   delete2_folders: boolean;
   delete1: boolean;

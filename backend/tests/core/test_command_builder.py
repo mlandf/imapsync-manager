@@ -56,6 +56,16 @@ def test_options() -> None:
     assert "--delete1" not in cmd
 
 
+def test_trim_folder_names_after_mappings() -> None:
+    opts = SyncOptions(
+        trim_folder_names=True,
+        folder_mappings=[FolderMapping(source="Sent", target="Gesendet")],
+    )
+    cmd = _cmd(opts)
+    regexes = [cmd[i + 1] for i, arg in enumerate(cmd) if arg == "--regextrans2"]
+    assert regexes == [r"s#^Sent$#Gesendet#", r"s/\s+(?=[\/.]|$)//g", r"s/(^|[\/.])\s+/$1/g"]
+
+
 def test_starttls() -> None:
     src = ProfileBase(name="a", host="h", security=Security.STARTTLS)
     _, dst = _endpoints()

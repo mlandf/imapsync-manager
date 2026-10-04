@@ -17,6 +17,9 @@ class SyncOptions(BaseModel):
     include: list[str] = Field(default_factory=list, description="--include Regex")
     exclude: list[str] = Field(default_factory=list, description="--exclude Regex")
     folder_mappings: list[FolderMapping] = Field(default_factory=list)
+    trim_folder_names: bool = Field(
+        default=False, description="Leerzeichen am Anfang/Ende von Ordnernamen im Ziel entfernen"
+    )
     delete2: bool = Field(default=False, description="Auf Ziel löschen, was in Quelle fehlt")
     delete2_folders: bool = False
     delete1: bool = Field(default=False, description="Nach Übertragung in Quelle löschen")

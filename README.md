@@ -131,3 +131,8 @@ Die Backend-Tests verwenden ein gefälschtes imapsync (`backend/tests/fake_imaps
 ## Lizenz
 
 [MIT](LICENSE) – gilt für den Code dieses Repos. imapsync selbst wird beim Docker-Build von [github.com/imapsync/imapsync](https://github.com/imapsync/imapsync) geladen und steht unter seiner eigenen Lizenz (NOLIMIT Public License). Es ist nicht Teil dieses Repos.
+
+## Tipps für bestimmte Server
+
+- **Proton Mail Bridge als Quelle:** `All Mail`, `Starred` und `Labels/…` sind nur Ansichten auf vorhandene Mails. Über *Ordner ausschließen* `^All Mail$`, `^Starred$`, `^Labels/` eintragen, sonst entstehen Duplikate.
+- **iCloud als Ziel:** Ordnernamen mit Leerzeichen am Ende werden abgelehnt („excess whitespace“). Die Option *Leerzeichen in Ordnernamen entfernen* aktivieren. Nachrichten über ca. 30 MB lehnt iCloud ab (`TOOBIG`); mit *Max. Nachrichtengröße* = `30000000` werden sie ohne Fehler übersprungen und müssen manuell gesichert werden.
