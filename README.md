@@ -95,6 +95,28 @@ frontend/
 - **Fortschritt:** Ausgewertet werden die Zeilen `Host1 Nb messages`, `Folder x/y` und `… msgs left`. Der Stand wird höchstens einmal pro Sekunde in die DB geschrieben, das Frontend fragt jede Sekunde ab. Die Anzeige läuft deshalb auch nach dem Schließen des Browsers weiter.
 - **Neustart des Backends:** Laufende Jobs werden als „Fehlgeschlagen“ markiert, wartende Jobs neu eingereiht.
 
+## Job-Optionen
+
+| Formular | imapsync |
+|---|---|
+| Probelauf | `--dry` |
+| Nur Ordnerstruktur | `--justfolders` |
+| Spezialordner automatisch zuordnen | `--automap` |
+| Alle Ordner abonnieren | `--subscribeall` |
+| Ordnerübergreifende Duplikate überspringen | `--skipcrossduplicates` |
+| Nur diese Ordner / einschließen / ausschließen | `--folder` / `--include` / `--exclude` (je Zeile ein Eintrag, Regex bei include/exclude) |
+| Ordner umbenennen | `--regextrans2 's#^Quelle$#Ziel#'` |
+| Leerzeichen in Ordnernamen entfernen | zwei `--regextrans2`-Regeln: entfernt Leerzeichen am Anfang/Ende jedes Namensteils (`Folders/Ballett ` → `Folders/Ballett`) |
+| Max./Min. Alter, Max. Größe, Bandbreitenlimit | `--maxage` / `--minage` / `--maxsize` / `--maxbytespersecond` |
+| Löschoptionen | `--delete2`, `--delete2folders`, `--delete1`, `--expunge1` |
+| Weitere Kommandozeilen-Optionen | werden unverändert angehängt (Shell-Quoting mit `'…'` möglich) |
+
+**Jobs neu starten:** Ein abgebrochener oder fehlgeschlagener Job kann jederzeit neu gestartet werden. imapsync erkennt bereits übertragene Mails (über Message-ID und Header) und überspringt sie. Bei großen Postfächern dauert dieser Abgleich zu Beginn einige Minuten. Beim Update (`docker compose up -d --build`) werden laufende Jobs als „Durch Neustart des Dienstes unterbrochen“ markiert und müssen danach von Hand neu gestartet werden.
+
+## Exit-Codes von imapsync
+
+Ein Job gilt als „Fehlgeschlagen“, sobald imapsync mit einem Exit-Code ungleich 0 endet – auch wenn der Großteil übertragen wurde. Die Ursachen stehen am Ende des Live-Logs (`Err x/y: …`). Häufig: `114 EXIT_ERR_APPEND` (Ziel lehnt einzelne Mails oder Ordner ab, siehe Tipps unten), `16`/`161` (Login fehlgeschlagen).
+
 ## 6. Abhängigkeiten & Begründung
 
 | Library | Warum |
